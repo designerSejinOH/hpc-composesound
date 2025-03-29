@@ -3,9 +3,10 @@
 import { useRef } from 'react'
 import dynamic from 'next/dynamic'
 const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: false })
+import { ReactLenis } from './ReactLenis'
 
 const Layout = ({ children }) => {
-  const ref = useRef()
+  const ref = useRef(null)
 
   return (
     <div
@@ -18,19 +19,21 @@ const Layout = ({ children }) => {
         touchAction: 'auto',
       }}
     >
-      {children}
-      <Scene
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          pointerEvents: 'none',
-        }}
-        eventSource={ref}
-        eventPrefix='client'
-      />
+      <ReactLenis>
+        {children}
+        <Scene
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            pointerEvents: 'none',
+          }}
+          eventSource={ref}
+          eventPrefix='client'
+        />
+      </ReactLenis>
     </div>
   )
 }
