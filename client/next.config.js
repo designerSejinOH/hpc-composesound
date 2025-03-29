@@ -18,6 +18,7 @@ const nextConfig = {
   // },
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   images: {},
+  // metadataBase: new URL('https://ohsejin.com'),
   webpack(config, { isServer }) {
     if (!isServer) {
       // We're in the browser build, so we can safely exclude the sharp module
@@ -47,6 +48,12 @@ const nextConfig = {
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
       use: ['raw-loader', 'glslify-loader'],
+    })
+
+    // svg support
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
     })
 
     return config
